@@ -30,6 +30,90 @@ function cn(...inputs: ClassValue[]) {
 
 type Language = 'English' | 'Hindi' | 'Marathi';
 
+const UI_LABELS = {
+  English: {
+    urgentAction: "Urgent Action",
+    stable: "Stable",
+    confidence: "Confidence",
+    severity: "Severity",
+    diagnosisSummary: "Diagnosis Summary",
+    possibleCauses: "Possible Causes",
+    preventionTips: "Prevention Tips",
+    recommendedTreatment: "Recommended Treatment",
+    actionableSteps: "Actionable Steps",
+    organicRemedies: "Organic Remedies",
+    chemicalOptions: "Chemical Options",
+    scanAnother: "Scan Another Crop",
+    healthyPlant: "Healthy Plant",
+    consultExpert: "Consult local agriculture expert for confirmation.",
+    aiDoctor: "AI Crop Doctor",
+    healthyCrops: "Healthy crops,",
+    happyFarmers: "happy farmers.",
+    introText: "Upload a clear photo of your crop's leaf, stem, or fruit to get instant AI diagnosis and treatment advice.",
+    takePhoto: "Take a photo or upload",
+    clickBrowse: "Click to browse or drag and drop image here",
+    selectPhoto: "Select Photo",
+    analyzeCrop: "Analyze Crop",
+    consulting: "Consulting the AI Doctor...",
+    analyzingLeaves: "Analyzing leaves and patterns for diagnosis",
+    disclaimer: "KisanDost AI is a tool to assist farmers. Always consult with a local agricultural expert for critical decisions."
+  },
+  Hindi: {
+    urgentAction: "तत्काल कार्रवाई",
+    stable: "स्थिर",
+    confidence: "आत्मविश्वास",
+    severity: "गंभीरता",
+    diagnosisSummary: "निदान सारांश",
+    possibleCauses: "संभावित कारण",
+    preventionTips: "बचाव के उपाय",
+    recommendedTreatment: "अनुशंसित उपचार",
+    actionableSteps: "कार्रवाई योग्य कदम",
+    organicRemedies: "जैविक उपचार",
+    chemicalOptions: "रासायनिक विकल्प",
+    scanAnother: "एक और फसल स्कैन करें",
+    healthyPlant: "स्वस्थ पौधा",
+    consultExpert: "पुष्टि के लिए स्थानीय कृषि विशेषज्ञ से सलाह लें।",
+    aiDoctor: "एआई फसल डॉक्टर",
+    healthyCrops: "स्वस्थ फसलें,",
+    happyFarmers: "खुशहाल किसान।",
+    introText: "तत्काल एआई निदान और उपचार सलाह प्राप्त करने के लिए अपनी फसल की पत्ती, तने या फल की एक स्पष्ट तस्वीर अपलोड करें।",
+    takePhoto: "तस्वीर लें या अपलोड करें",
+    clickBrowse: "ब्राउज़ करने के लिए क्लिक करें या छवि को यहां खींचें",
+    selectPhoto: "फोटो चुनें",
+    analyzeCrop: "फसल का विश्लेषण करें",
+    consulting: "एआई डॉक्टर से सलाह ले रहे हैं...",
+    analyzingLeaves: "निदान के लिए पत्तियों और पैटर्न का विश्लेषण कर रहे हैं",
+    disclaimer: "KisanDost AI किसानों की सहायता के लिए एक उपकरण है। महत्वपूर्ण निर्णयों के लिए हमेशा स्थानीय कृषि विशेषज्ञ से सलाह लें।"
+  },
+  Marathi: {
+    urgentAction: "तात्काळ कारवाई",
+    stable: "स्थिर",
+    confidence: "आत्मविश्वास",
+    severity: "तीव्रता",
+    diagnosisSummary: "निदान सारांश",
+    possibleCauses: "संभावित कारणे",
+    preventionTips: "प्रतिबंधात्मक उपाय",
+    recommendedTreatment: "शिफारस केलेले उपचार",
+    actionableSteps: "कृती करण्यायोग्य पावले",
+    organicRemedies: "सेंद्रिय उपाय",
+    chemicalOptions: "रासायनिक पर्याय",
+    scanAnother: "दुसरे पीक स्कॅन करा",
+    healthyPlant: "निरोगी रोप",
+    consultExpert: "खात्रीसाठी स्थानिक कृषी तज्ज्ञांचा सल्ला घ्या.",
+    aiDoctor: "एआय पीक डॉक्टर",
+    healthyCrops: "निरोगी पिके,",
+    happyFarmers: "सुखी शेतकरी.",
+    introText: "त्वरीत एआय निदान आणि उपचार सल्ला मिळविण्यासाठी आपल्या पिकाच्या पानाचा, खोडाचा किंवा फळाचा स्पष्ट फोटो अपलोड करा.",
+    takePhoto: "फोटो घ्या किंवा अपलोड करा",
+    clickBrowse: "ब्राउझ करण्यासाठी क्लिक करा किंवा इमेज येथे ड्रॅग करा",
+    selectPhoto: "फोटो निवडा",
+    analyzeCrop: "पिकाचे विश्लेषण करा",
+    consulting: "एआय डॉक्टरचा सल्ला घेत आहे...",
+    analyzingLeaves: "निदानासाठी पाने आणि नमुन्यांचे विश्लेषण करत आहे",
+    disclaimer: "KisanDost AI हे शेतकऱ्यांना मदत करण्यासाठी एक साधन आहे. महत्त्वाच्या निर्णयांसाठी नेहमी स्थानिक कृषी तज्ज्ञांचा सल्ला घ्या."
+  }
+};
+
 export default function App() {
   const [image, setImage] = useState<string | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -37,6 +121,8 @@ export default function App() {
   const [error, setError] = useState<string | null>(null);
   const [language, setLanguage] = useState<Language>('English');
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const labels = UI_LABELS[language];
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -86,6 +172,8 @@ export default function App() {
     setError(null);
   };
 
+  const currentData = result?.Languages[language];
+
   return (
     <div className="min-h-screen pb-20">
       {/* Header */}
@@ -97,7 +185,7 @@ export default function App() {
             </div>
             <div>
               <h1 className="text-xl font-bold tracking-tight text-stone-900">KisanDost</h1>
-              <p className="text-[10px] uppercase tracking-widest font-semibold text-emerald-600">AI Crop Doctor</p>
+              <p className="text-[10px] uppercase tracking-widest font-semibold text-emerald-600">{labels.aiDoctor}</p>
             </div>
           </div>
           
@@ -128,8 +216,8 @@ export default function App() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-12"
           >
-            <h2 className="serif text-5xl md:text-6xl text-stone-900 mb-4">Healthy crops, <br /><span className="text-emerald-700 italic">happy farmers.</span></h2>
-            <p className="text-stone-500 max-w-md mx-auto">Upload a clear photo of your crop's leaf, stem, or fruit to get instant AI diagnosis and treatment advice.</p>
+            <h2 className="serif text-5xl md:text-6xl text-stone-900 mb-4">{labels.healthyCrops} <br /><span className="text-emerald-700 italic">{labels.happyFarmers}</span></h2>
+            <p className="text-stone-500 max-w-md mx-auto">{labels.introText}</p>
           </motion.div>
         )}
 
@@ -165,14 +253,14 @@ export default function App() {
                     <div className="w-20 h-20 bg-stone-50 rounded-full flex items-center justify-center mx-auto mb-6 text-stone-400 group-hover:text-emerald-500 transition-colors">
                       <Camera size={40} />
                     </div>
-                    <p className="text-lg font-medium text-stone-900 mb-2">Take a photo or upload</p>
-                    <p className="text-sm text-stone-500 mb-8">Click to browse or drag and drop image here</p>
+                    <p className="text-lg font-medium text-stone-900 mb-2">{labels.takePhoto}</p>
+                    <p className="text-sm text-stone-500 mb-8">{labels.clickBrowse}</p>
                     <button 
                       onClick={() => fileInputRef.current?.click()}
                       className="bg-emerald-600 text-white px-8 py-3 rounded-full font-semibold shadow-lg shadow-emerald-200 hover:bg-emerald-700 transition-all flex items-center gap-2 mx-auto"
                     >
                       <Upload size={18} />
-                      Select Photo
+                      {labels.selectPhoto}
                     </button>
                     <input 
                       type="file" 
@@ -196,7 +284,7 @@ export default function App() {
                     className="bg-stone-900 text-white px-12 py-4 rounded-full font-bold text-lg shadow-2xl hover:bg-stone-800 transition-all flex items-center gap-3 group"
                   >
                     <Stethoscope size={24} className="group-hover:rotate-12 transition-transform" />
-                    Analyze Crop
+                    {labels.analyzeCrop}
                     <ArrowRight size={20} />
                   </button>
                 </motion.div>
@@ -221,8 +309,8 @@ export default function App() {
                       className="w-3 h-3 bg-emerald-600 rounded-full" 
                     />
                   </div>
-                  <p className="text-stone-600 font-medium italic">Consulting the AI Doctor...</p>
-                  <p className="text-xs text-stone-400 mt-1">Analyzing leaves and patterns for diagnosis</p>
+                  <p className="text-stone-600 font-medium italic">{labels.consulting}</p>
+                  <p className="text-xs text-stone-400 mt-1">{labels.analyzingLeaves}</p>
                 </div>
               )}
 
@@ -237,7 +325,7 @@ export default function App() {
 
           {/* Result Section */}
           <AnimatePresence>
-            {result && (
+            {result && currentData && (
               <motion.div 
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -250,12 +338,12 @@ export default function App() {
                     {result.ImmediateActionRequired === 'Yes' ? (
                       <div className="flex items-center gap-2 bg-red-50 text-red-600 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider border border-red-100">
                         <AlertTriangle size={14} />
-                        Urgent Action
+                        {labels.urgentAction}
                       </div>
                     ) : (
                       <div className="flex items-center gap-2 bg-emerald-50 text-emerald-600 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider border border-emerald-100">
                         <CheckCircle2 size={14} />
-                        Stable
+                        {labels.stable}
                       </div>
                     )}
                   </div>
@@ -268,19 +356,19 @@ export default function App() {
                     <div className="flex-1">
                       <div className="flex items-center gap-2 text-emerald-600 mb-2">
                         <Leaf size={16} />
-                        <span className="text-sm font-bold uppercase tracking-widest">{result.Crop}</span>
+                        <span className="text-sm font-bold uppercase tracking-widest">{currentData.Crop}</span>
                       </div>
                       <h2 className="serif text-4xl text-stone-900 mb-4 leading-tight">
-                        {result.Condition === 'No disease detected' ? 'Healthy Plant' : result.Condition}
+                        {currentData.Condition.toLowerCase().includes('no disease') ? labels.healthyPlant : currentData.Condition}
                       </h2>
                       
                       <div className="grid grid-cols-2 gap-4">
                         <div className="bg-stone-50 p-3 rounded-2xl">
-                          <p className="text-[10px] uppercase tracking-wider text-stone-400 font-bold mb-1">Confidence</p>
+                          <p className="text-[10px] uppercase tracking-wider text-stone-400 font-bold mb-1">{labels.confidence}</p>
                           <p className="text-xl font-bold text-stone-800">{result.Confidence}</p>
                         </div>
                         <div className="bg-stone-50 p-3 rounded-2xl">
-                          <p className="text-[10px] uppercase tracking-wider text-stone-400 font-bold mb-1">Severity</p>
+                          <p className="text-[10px] uppercase tracking-wider text-stone-400 font-bold mb-1">{labels.severity}</p>
                           <p className={cn(
                             "text-xl font-bold",
                             result.Severity === 'High' ? 'text-red-600' : 
@@ -295,10 +383,10 @@ export default function App() {
                   <div className="mt-8 p-6 bg-emerald-50/50 rounded-2xl border border-emerald-100/50">
                     <div className="flex items-center gap-2 mb-3 text-emerald-800">
                       <Languages size={18} />
-                      <span className="font-bold text-sm">Diagnosis Summary ({language})</span>
+                      <span className="font-bold text-sm">{labels.diagnosisSummary}</span>
                     </div>
                     <p className="text-stone-700 leading-relaxed italic">
-                      "{result.LanguageOutput[language]}"
+                      "{currentData.Summary}"
                     </p>
                   </div>
                 </div>
@@ -311,10 +399,10 @@ export default function App() {
                       <div className="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center text-orange-600">
                         <Info size={20} />
                       </div>
-                      <h3 className="font-bold text-stone-900">Possible Causes</h3>
+                      <h3 className="font-bold text-stone-900">{labels.possibleCauses}</h3>
                     </div>
                     <ul className="space-y-3">
-                      {result.Causes.map((cause, i) => (
+                      {currentData.Causes.map((cause, i) => (
                         <li key={i} className="flex items-start gap-3 text-sm text-stone-600">
                           <div className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-1.5 shrink-0" />
                           {cause}
@@ -329,10 +417,10 @@ export default function App() {
                       <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600">
                         <ShieldCheck size={20} />
                       </div>
-                      <h3 className="font-bold text-stone-900">Prevention Tips</h3>
+                      <h3 className="font-bold text-stone-900">{labels.preventionTips}</h3>
                     </div>
                     <ul className="space-y-3">
-                      {result.PreventionTips.map((tip, i) => (
+                      {currentData.PreventionTips.map((tip, i) => (
                         <li key={i} className="flex items-start gap-3 text-sm text-stone-600">
                           <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5 shrink-0" />
                           {tip}
@@ -349,16 +437,16 @@ export default function App() {
                       <Droplets size={24} />
                     </div>
                     <div>
-                      <h3 className="font-bold text-xl text-stone-900">Recommended Treatment</h3>
-                      <p className="text-xs text-stone-400 uppercase tracking-widest font-bold">Actionable Steps</p>
+                      <h3 className="font-bold text-xl text-stone-900">{labels.recommendedTreatment}</h3>
+                      <p className="text-xs text-stone-400 uppercase tracking-widest font-bold">{labels.actionableSteps}</p>
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-4">
-                      <h4 className="text-xs font-bold uppercase tracking-widest text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full w-fit">Organic Remedies</h4>
+                      <h4 className="text-xs font-bold uppercase tracking-widest text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full w-fit">{labels.organicRemedies}</h4>
                       <ul className="space-y-4">
-                        {result.Treatment.Organic.map((item, i) => (
+                        {currentData.Treatment.Organic.map((item, i) => (
                           <li key={i} className="flex items-start gap-4 p-4 rounded-2xl bg-stone-50 border border-stone-100">
                             <div className="w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 text-xs font-bold shrink-0">{i + 1}</div>
                             <p className="text-sm text-stone-700 leading-relaxed">{item}</p>
@@ -368,9 +456,9 @@ export default function App() {
                     </div>
 
                     <div className="space-y-4">
-                      <h4 className="text-xs font-bold uppercase tracking-widest text-red-700 bg-red-50 px-3 py-1 rounded-full w-fit">Chemical Options</h4>
+                      <h4 className="text-xs font-bold uppercase tracking-widest text-red-700 bg-red-50 px-3 py-1 rounded-full w-fit">{labels.chemicalOptions}</h4>
                       <ul className="space-y-4">
-                        {result.Treatment.Chemical.map((item, i) => (
+                        {currentData.Treatment.Chemical.map((item, i) => (
                           <li key={i} className="flex items-start gap-4 p-4 rounded-2xl bg-stone-50 border border-stone-100">
                             <div className="w-6 h-6 rounded-full bg-red-100 flex items-center justify-center text-red-700 text-xs font-bold shrink-0">{i + 1}</div>
                             <p className="text-sm text-stone-700 leading-relaxed">{item}</p>
@@ -387,7 +475,7 @@ export default function App() {
                     className="flex items-center gap-2 text-stone-400 hover:text-emerald-600 transition-colors font-medium"
                   >
                     <RefreshCw size={18} />
-                    Scan Another Crop
+                    {labels.scanAnother}
                   </button>
                 </div>
               </motion.div>
@@ -400,7 +488,7 @@ export default function App() {
       <footer className="max-w-4xl mx-auto px-6 mt-20 text-center">
         <div className="h-px bg-stone-200 w-full mb-8" />
         <p className="text-xs text-stone-400 max-w-sm mx-auto leading-relaxed">
-          KisanDost AI is a tool to assist farmers. Always consult with a local agricultural expert for critical decisions.
+          {labels.disclaimer}
         </p>
       </footer>
     </div>
