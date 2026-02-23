@@ -1,5 +1,5 @@
 {
   "name": "KisanDost - AI Crop Doctor",
   "description": "AI-powered crop disease diagnosis tool for farmers. Upload a photo of your crop to get instant treatment advice in English, Hindi, and Marathi.",
-  "requestFramePermissions": ["camera"]
+  "requestFramePermissions": ["camera", "geolocation"]
 }

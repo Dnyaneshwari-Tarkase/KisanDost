@@ -68,6 +68,24 @@ const UI_LABELS = {
     sprayBad: "Avoid spraying (Rain expected)",
     mandiTitle: "Current Mandi Prices",
     mandiSubtitle: "Market rates for your region",
+    mandiSearchPlaceholder: "Search crop...",
+    mandiCrops: {
+      onion: "Onion",
+      tomato: "Tomato",
+      potato: "Potato",
+      wheat: "Wheat",
+      soyabean: "Soyabean",
+      cotton: "Cotton",
+      cabbage: "Cabbage",
+      cauliflower: "Cauliflower",
+      okra: "Okra",
+      brinjal: "Brinjal",
+      ginger: "Ginger",
+      garlic: "Garlic",
+      chili: "Chili"
+    },
+    pricePerKg: "per kg",
+    pricePerQ: "per quintal",
     builtBy: "Built by Tarkase Dnyaneshwari"
   },
   Hindi: {
@@ -103,6 +121,24 @@ const UI_LABELS = {
     sprayBad: "छिड़काव से बचें (बारिश की संभावना)",
     mandiTitle: "वर्तमान मंडी भाव",
     mandiSubtitle: "आपके क्षेत्र के लिए बाजार दरें",
+    mandiSearchPlaceholder: "फसल खोजें...",
+    mandiCrops: {
+      onion: "प्याज",
+      tomato: "टमाटर",
+      potato: "आलू",
+      wheat: "गेहूं",
+      soyabean: "सोयाबीन",
+      cotton: "कपास",
+      cabbage: "पत्ता गोभी",
+      cauliflower: "फूलगोभी",
+      okra: "भिंडी",
+      brinjal: "बैंगन",
+      ginger: "अदरक",
+      garlic: "लहसुन",
+      chili: "मिर्च"
+    },
+    pricePerKg: "प्रति किलो",
+    pricePerQ: "प्रति क्विंटल",
     builtBy: "Tarkase Dnyaneshwari द्वारा निर्मित"
   },
   Marathi: {
@@ -138,6 +174,24 @@ const UI_LABELS = {
     sprayBad: "फवारणी टाळा (पावसाची शक्यता)",
     mandiTitle: "चालू मंडी भाव",
     mandiSubtitle: "तुमच्या भागातील बाजार भाव",
+    mandiSearchPlaceholder: "पीक शोधा...",
+    mandiCrops: {
+      onion: "कांदा",
+      tomato: "टोमॅटो",
+      potato: "बटाटा",
+      wheat: "गहू",
+      soyabean: "सोयाबीन",
+      cotton: "कापूस",
+      cabbage: "कोबी",
+      cauliflower: "फ्लॉवर",
+      okra: "भेंडी",
+      brinjal: "वांगी",
+      ginger: "आले",
+      garlic: "लसूण",
+      chili: "मिरची"
+    },
+    pricePerKg: "प्रति किलो",
+    pricePerQ: "प्रति क्विंटल",
     builtBy: "Tarkase Dnyaneshwari यांनी तयार केले"
   }
 };
@@ -150,6 +204,7 @@ export default function App() {
   const [error, setError] = useState<string | null>(null);
   const [language, setLanguage] = useState<Language>('English');
   const [weather, setWeather] = useState<{ temp: number, condition: string, rain: boolean } | null>(null);
+  const [mandiSearch, setMandiSearch] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [history, setHistory] = useState<{ image: string, result: DiagnosisResult, date: string }[]>(() => {
@@ -295,21 +350,65 @@ export default function App() {
             <motion.div 
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="bg-white p-6 rounded-3xl border border-stone-100 shadow-sm"
+              className="bg-white p-6 rounded-3xl border border-stone-100 shadow-sm overflow-hidden flex flex-col"
             >
-              <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-2">{labels.mandiTitle}</h3>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between mb-4">
                 <div>
-                  <div className="flex items-center gap-2 text-stone-900 font-bold">
-                    <TrendingUp size={16} className="text-emerald-500" />
-                    Wheat: ₹2,450/q
-                  </div>
+                  <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest">{labels.mandiTitle}</h3>
                   <p className="text-[10px] text-stone-400">{labels.mandiSubtitle}</p>
                 </div>
-                <div className="text-right">
-                  <p className="text-xs font-bold text-emerald-600">+2.4%</p>
-                  <p className="text-[10px] text-stone-400">Today</p>
+                <div className="relative">
+                  <input 
+                    type="text"
+                    value={mandiSearch}
+                    onChange={(e) => setMandiSearch(e.target.value)}
+                    placeholder={labels.mandiSearchPlaceholder}
+                    className="pl-8 pr-3 py-1.5 bg-stone-50 border border-stone-200 rounded-full text-[10px] focus:ring-2 focus:ring-emerald-500 outline-none w-32 md:w-40 transition-all"
+                  />
+                  <TrendingUp size={12} className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" />
                 </div>
+              </div>
+              
+              <div className="space-y-3 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
+                {[
+                  { key: 'onion', price: '20', unit: labels.pricePerKg, trend: '+5%' },
+                  { key: 'tomato', price: '35', unit: labels.pricePerKg, trend: '-2%' },
+                  { key: 'potato', price: '18', unit: labels.pricePerKg, trend: '0%' },
+                  { key: 'cabbage', price: '15', unit: labels.pricePerKg, trend: '+3%' },
+                  { key: 'cauliflower', price: '25', unit: labels.pricePerKg, trend: '-1%' },
+                  { key: 'okra', price: '40', unit: labels.pricePerKg, trend: '+8%' },
+                  { key: 'brinjal', price: '22', unit: labels.pricePerKg, trend: '+2%' },
+                  { key: 'ginger', price: '120', unit: labels.pricePerKg, trend: '+10%' },
+                  { key: 'garlic', price: '150', unit: labels.pricePerKg, trend: '+15%' },
+                  { key: 'chili', price: '60', unit: labels.pricePerKg, trend: '-5%' },
+                  { key: 'wheat', price: '2,450', unit: labels.pricePerQ, trend: '+1.2%' },
+                  { key: 'soyabean', price: '4,800', unit: labels.pricePerQ, trend: '+0.5%' },
+                  { key: 'cotton', price: '7,200', unit: labels.pricePerQ, trend: '-1.5%' },
+                ].filter(item => 
+                  labels.mandiCrops[item.key as keyof typeof labels.mandiCrops].toLowerCase().includes(mandiSearch.toLowerCase())
+                ).map((item) => (
+                  <div key={item.key} className="flex items-center justify-between p-2 rounded-xl bg-stone-50 hover:bg-stone-100 transition-colors">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-emerald-500" />
+                      <span className="text-xs font-bold text-stone-900">
+                        {labels.mandiCrops[item.key as keyof typeof labels.mandiCrops]}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <div className="text-right">
+                        <p className="text-xs font-bold text-stone-900">₹{item.price}</p>
+                        <p className="text-[10px] text-stone-400">{item.unit}</p>
+                      </div>
+                      <div className={cn(
+                        "text-[10px] font-bold px-1.5 py-0.5 rounded-md",
+                        item.trend.startsWith('+') ? "bg-emerald-50 text-emerald-600" : 
+                        item.trend.startsWith('-') ? "bg-red-50 text-red-600" : "bg-stone-100 text-stone-500"
+                      )}>
+                        {item.trend}
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </motion.div>
           </div>
