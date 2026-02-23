@@ -67,22 +67,91 @@ const UI_LABELS = {
     sprayGood: "Good time to spray",
     sprayBad: "Avoid spraying (Rain expected)",
     mandiTitle: "Current Mandi Prices",
-    mandiSubtitle: "Market rates for your region",
-    mandiSearchPlaceholder: "Search crop...",
+    mandiSubtitle: "Daily updates for your region",
+    mandiSearchPlaceholder: "Search...",
+    mandiAreaLabel: "Search Village/Area",
+    mandiAreaPlaceholder: "Enter village name...",
+    mandiTabs: {
+      vegetables: "Vegetables",
+      fruits: "Fruits",
+      grains: "Grains"
+    },
+    mandiAreas: {
+      rahata: "Rahata",
+      shirdi: "Shirdi",
+      dhule: "Dhule",
+      pune: "Pune",
+      shrirampur: "Shrirampur",
+      nashik: "Nashik",
+      nagpur: "Nagpur",
+      aurangabad: "Aurangabad",
+      sangli: "Sangli",
+      satara: "Satara",
+      kolhapur: "Kolhapur",
+      akola: "Akola",
+      amravati: "Amravati",
+      latur: "Latur",
+      nanded: "Nanded",
+      jalgaon: "Jalgaon",
+      beed: "Beed",
+      osmanabad: "Osmanabad",
+      parbhani: "Parbhani",
+      hingoli: "Hingoli",
+      wardha: "Wardha",
+      gondia: "Gondia",
+      gadchiroli: "Gadchiroli",
+      chandrapur: "Chandrapur",
+      yavatmal: "Yavatmal",
+      buldhana: "Buldhana",
+      washim: "Washim",
+      bhandara: "Bhandara",
+      ratnagiri: "Ratnagiri",
+      sindhudurg: "Sindhudurg",
+      raigad: "Raigad",
+      palghar: "Palghar",
+      thane: "Thane",
+      mumbai: "Mumbai",
+      delhi: "Delhi",
+      bangalore: "Bangalore",
+      hyderabad: "Hyderabad",
+      chennai: "Chennai",
+      kolkata: "Kolkata",
+      ahmedabad: "Ahmedabad",
+      surat: "Surat",
+      jaipur: "Jaipur",
+      lucknow: "Lucknow",
+      kanpur: "Kanpur"
+    },
     mandiCrops: {
       onion: "Onion",
       tomato: "Tomato",
       potato: "Potato",
-      wheat: "Wheat",
-      soyabean: "Soyabean",
-      cotton: "Cotton",
       cabbage: "Cabbage",
       cauliflower: "Cauliflower",
       okra: "Okra",
       brinjal: "Brinjal",
       ginger: "Ginger",
       garlic: "Garlic",
-      chili: "Chili"
+      chili: "Chili",
+      carrot: "Carrot",
+      radish: "Radish",
+      spinach: "Spinach",
+      bitterGourd: "Bitter Gourd",
+      bottleGourd: "Bottle Gourd",
+      apple: "Apple",
+      banana: "Banana",
+      mango: "Mango",
+      grapes: "Grapes",
+      orange: "Orange",
+      pomegranate: "Pomegranate",
+      papaya: "Papaya",
+      watermelon: "Watermelon",
+      guava: "Guava",
+      wheat: "Wheat",
+      soyabean: "Soyabean",
+      cotton: "Cotton",
+      rice: "Rice",
+      maize: "Maize"
     },
     pricePerKg: "per kg",
     pricePerQ: "per quintal",
@@ -120,22 +189,91 @@ const UI_LABELS = {
     sprayGood: "छिड़काव के लिए अच्छा समय",
     sprayBad: "छिड़काव से बचें (बारिश की संभावना)",
     mandiTitle: "वर्तमान मंडी भाव",
-    mandiSubtitle: "आपके क्षेत्र के लिए बाजार दरें",
-    mandiSearchPlaceholder: "फसल खोजें...",
+    mandiSubtitle: "आपके क्षेत्र के लिए दैनिक अपडेट",
+    mandiSearchPlaceholder: "खोजें...",
+    mandiAreaLabel: "गांव/क्षेत्र खोजें",
+    mandiAreaPlaceholder: "गांव का नाम दर्ज करें...",
+    mandiTabs: {
+      vegetables: "सब्जियां",
+      fruits: "फल",
+      grains: "अनाज"
+    },
+    mandiAreas: {
+      rahata: "रहाता",
+      shirdi: "शिर्डी",
+      dhule: "धुले",
+      pune: "पुणे",
+      shrirampur: "श्रीरामपुर",
+      nashik: "नासिक",
+      nagpur: "नागपुर",
+      aurangabad: "औरंगाबाद",
+      sangli: "सांगली",
+      satara: "सतारा",
+      kolhapur: "कोल्हापुर",
+      akola: "अकोला",
+      amravati: "अमरावती",
+      latur: "लातूर",
+      nanded: "नांदेड",
+      jalgaon: "जलगांव",
+      beed: "बीड",
+      osmanabad: "उस्मानाबाद",
+      parbhani: "परभणी",
+      hingoli: "हिंगोली",
+      wardha: "वर्धा",
+      gondia: "गोंदिया",
+      gadchiroli: "गढ़चिरौली",
+      chandrapur: "चंद्रपुर",
+      yavatmal: "यवतमाल",
+      buldhana: "बुलढाणा",
+      washim: "वाशिम",
+      bhandara: "भंडारा",
+      ratnagiri: "रत्नागिरी",
+      sindhudurg: "सिंधुदुर्ग",
+      raigad: "रायगढ़",
+      palghar: "पालघर",
+      thane: "ठाणे",
+      mumbai: "मुंबई",
+      delhi: "दिल्ली",
+      bangalore: "बेंगलुरु",
+      hyderabad: "हैदराबाद",
+      chennai: "चेन्नई",
+      kolkata: "कोलकाता",
+      ahmedabad: "अहमदाबाद",
+      surat: "सूरत",
+      jaipur: "जयपुर",
+      lucknow: "लखनऊ",
+      kanpur: "कानपुर"
+    },
     mandiCrops: {
       onion: "प्याज",
       tomato: "टमाटर",
       potato: "आलू",
-      wheat: "गेहूं",
-      soyabean: "सोयाबीन",
-      cotton: "कपास",
       cabbage: "पत्ता गोभी",
       cauliflower: "फूलगोभी",
       okra: "भिंडी",
       brinjal: "बैंगन",
       ginger: "अदरक",
       garlic: "लहसुन",
-      chili: "मिर्च"
+      chili: "मिर्च",
+      carrot: "गाजर",
+      radish: "मूली",
+      spinach: "पालक",
+      bitterGourd: "करेला",
+      bottleGourd: "लौकी",
+      apple: "सेब",
+      banana: "केला",
+      mango: "आम",
+      grapes: "अंगूर",
+      orange: "संतरा",
+      pomegranate: "अनार",
+      papaya: "पपीता",
+      watermelon: "तरबूज",
+      guava: "अमरूद",
+      wheat: "गेहूं",
+      soyabean: "सोयाबीन",
+      cotton: "कपास",
+      rice: "चावल",
+      maize: "मक्का"
     },
     pricePerKg: "प्रति किलो",
     pricePerQ: "प्रति क्विंटल",
@@ -173,22 +311,91 @@ const UI_LABELS = {
     sprayGood: "फवारणीसाठी चांगली वेळ",
     sprayBad: "फवारणी टाळा (पावसाची शक्यता)",
     mandiTitle: "चालू मंडी भाव",
-    mandiSubtitle: "तुमच्या भागातील बाजार भाव",
-    mandiSearchPlaceholder: "पीक शोधा...",
+    mandiSubtitle: "तुमच्या भागातील दैनंदिन अपडेट्स",
+    mandiSearchPlaceholder: "शोधा...",
+    mandiAreaLabel: "गाव/क्षेत्र शोधा",
+    mandiAreaPlaceholder: "गावाचे नाव टाका...",
+    mandiTabs: {
+      vegetables: "भाज्या",
+      fruits: "फळे",
+      grains: "धान्य"
+    },
+    mandiAreas: {
+      rahata: "रहाता",
+      shirdi: "शिर्डी",
+      dhule: "धुळे",
+      pune: "पुणे",
+      shrirampur: "श्रीरामपूर",
+      nashik: "नाशिक",
+      nagpur: "नागपूर",
+      aurangabad: "छत्रपती संभाजीनगर",
+      sangli: "सांगली",
+      satara: "सातारा",
+      kolhapur: "कोल्हापूर",
+      akola: "अकोला",
+      amravati: "अमरावती",
+      latur: "लातूर",
+      nanded: "नांदेड",
+      jalgaon: "जळगाव",
+      beed: "बीड",
+      osmanabad: "धाराशिव",
+      parbhani: "परभणी",
+      hingoli: "हिंगोली",
+      wardha: "वर्धा",
+      gondia: "गोंदिया",
+      gadchiroli: "गडचिरोली",
+      chandrapur: "चंद्रपूर",
+      yavatmal: "यवतमाळ",
+      buldhana: "बुलढाणा",
+      washim: "वाशिम",
+      bhandara: "भंडारा",
+      ratnagiri: "रत्नागिरी",
+      sindhudurg: "सिंधुदुर्ग",
+      raigad: "रायगड",
+      palghar: "पालघर",
+      thane: "ठाणे",
+      mumbai: "मुंबई",
+      delhi: "दिल्ली",
+      bangalore: "बेंगळुरू",
+      hyderabad: "हैदराबाद",
+      chennai: "चेन्नई",
+      kolkata: "कोलकाता",
+      ahmedabad: "अहमदाबाद",
+      surat: "सुरत",
+      jaipur: "जयपूर",
+      lucknow: "लखनऊ",
+      kanpur: "कानपूर"
+    },
     mandiCrops: {
       onion: "कांदा",
       tomato: "टोमॅटो",
       potato: "बटाटा",
-      wheat: "गहू",
-      soyabean: "सोयाबीन",
-      cotton: "कापूस",
       cabbage: "कोबी",
       cauliflower: "फ्लॉवर",
       okra: "भेंडी",
       brinjal: "वांगी",
       ginger: "आले",
       garlic: "लसूण",
-      chili: "मिरची"
+      chili: "मिरची",
+      carrot: "गाजर",
+      radish: "मुळा",
+      spinach: "पालक",
+      bitterGourd: "कारले",
+      bottleGourd: "दुधी भोपळा",
+      apple: "सफरचंद",
+      banana: "केळी",
+      mango: "आंबा",
+      grapes: "द्राक्षे",
+      orange: "संत्री",
+      pomegranate: "डाळिंब",
+      papaya: "पपई",
+      watermelon: "कलिंगड",
+      guava: "पेरू",
+      wheat: "गहू",
+      soyabean: "सोयाबीन",
+      cotton: "कापूस",
+      rice: "तांदूळ",
+      maize: "मका"
     },
     pricePerKg: "प्रति किलो",
     pricePerQ: "प्रति क्विंटल",
@@ -205,6 +412,9 @@ export default function App() {
   const [language, setLanguage] = useState<Language>('English');
   const [weather, setWeather] = useState<{ temp: number, condition: string, rain: boolean } | null>(null);
   const [mandiSearch, setMandiSearch] = useState('');
+  const [mandiArea, setMandiArea] = useState('rahata');
+  const [mandiAreaInput, setMandiAreaInput] = useState('Rahata');
+  const [mandiCategory, setMandiCategory] = useState<'vegetables' | 'fruits' | 'grains'>('vegetables');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [history, setHistory] = useState<{ image: string, result: DiagnosisResult, date: string }[]>(() => {
@@ -352,39 +562,110 @@ export default function App() {
               animate={{ opacity: 1, x: 0 }}
               className="bg-white p-6 rounded-3xl border border-stone-100 shadow-sm overflow-hidden flex flex-col"
             >
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest">{labels.mandiTitle}</h3>
-                  <p className="text-[10px] text-stone-400">{labels.mandiSubtitle}</p>
+              <div className="flex flex-col gap-4 mb-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest">{labels.mandiTitle}</h3>
+                    <p className="text-[10px] text-stone-400">{labels.mandiSubtitle}</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <TrendingUp size={16} className="text-emerald-500" />
+                  </div>
                 </div>
-                <div className="relative">
-                  <input 
-                    type="text"
-                    value={mandiSearch}
-                    onChange={(e) => setMandiSearch(e.target.value)}
-                    placeholder={labels.mandiSearchPlaceholder}
-                    className="pl-8 pr-3 py-1.5 bg-stone-50 border border-stone-200 rounded-full text-[10px] focus:ring-2 focus:ring-emerald-500 outline-none w-32 md:w-40 transition-all"
-                  />
-                  <TrendingUp size={12} className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" />
+
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="relative">
+                    <input 
+                      list="mandi-villages"
+                      value={mandiAreaInput}
+                      onChange={(e) => {
+                        setMandiAreaInput(e.target.value);
+                        setMandiArea(e.target.value.toLowerCase());
+                      }}
+                      placeholder={labels.mandiAreaPlaceholder}
+                      className="w-full pl-3 pr-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-[10px] font-bold text-stone-700 focus:ring-2 focus:ring-emerald-500 outline-none transition-all"
+                    />
+                    <datalist id="mandi-villages">
+                      {Object.values(labels.mandiAreas).map((name, idx) => (
+                        <option key={idx} value={name} />
+                      ))}
+                    </datalist>
+                  </div>
+                  <div className="relative">
+                    <input 
+                      type="text"
+                      value={mandiSearch}
+                      onChange={(e) => setMandiSearch(e.target.value)}
+                      placeholder={labels.mandiSearchPlaceholder}
+                      className="w-full pl-8 pr-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-[10px] focus:ring-2 focus:ring-emerald-500 outline-none transition-all"
+                    />
+                    <TrendingUp size={12} className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" />
+                  </div>
+                </div>
+
+                <div className="flex gap-1 bg-stone-100 p-1 rounded-xl">
+                  {(['vegetables', 'fruits', 'grains'] as const).map((cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => setMandiCategory(cat)}
+                      className={cn(
+                        "flex-1 py-1.5 text-[10px] font-bold rounded-lg transition-all",
+                        mandiCategory === cat 
+                          ? "bg-white text-emerald-700 shadow-sm" 
+                          : "text-stone-500 hover:text-stone-700"
+                      )}
+                    >
+                      {labels.mandiTabs[cat]}
+                    </button>
+                  ))}
                 </div>
               </div>
               
               <div className="space-y-3 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
                 {[
-                  { key: 'onion', price: '20', unit: labels.pricePerKg, trend: '+5%' },
-                  { key: 'tomato', price: '35', unit: labels.pricePerKg, trend: '-2%' },
-                  { key: 'potato', price: '18', unit: labels.pricePerKg, trend: '0%' },
-                  { key: 'cabbage', price: '15', unit: labels.pricePerKg, trend: '+3%' },
-                  { key: 'cauliflower', price: '25', unit: labels.pricePerKg, trend: '-1%' },
-                  { key: 'okra', price: '40', unit: labels.pricePerKg, trend: '+8%' },
-                  { key: 'brinjal', price: '22', unit: labels.pricePerKg, trend: '+2%' },
-                  { key: 'ginger', price: '120', unit: labels.pricePerKg, trend: '+10%' },
-                  { key: 'garlic', price: '150', unit: labels.pricePerKg, trend: '+15%' },
-                  { key: 'chili', price: '60', unit: labels.pricePerKg, trend: '-5%' },
-                  { key: 'wheat', price: '2,450', unit: labels.pricePerQ, trend: '+1.2%' },
-                  { key: 'soyabean', price: '4,800', unit: labels.pricePerQ, trend: '+0.5%' },
-                  { key: 'cotton', price: '7,200', unit: labels.pricePerQ, trend: '-1.5%' },
-                ].filter(item => 
+                  // Vegetables
+                  { key: 'onion', basePrice: 20, unit: labels.pricePerKg, trend: '+5%', cat: 'vegetables' },
+                  { key: 'tomato', basePrice: 35, unit: labels.pricePerKg, trend: '-2%', cat: 'vegetables' },
+                  { key: 'potato', basePrice: 18, unit: labels.pricePerKg, trend: '0%', cat: 'vegetables' },
+                  { key: 'cabbage', basePrice: 15, unit: labels.pricePerKg, trend: '+3%', cat: 'vegetables' },
+                  { key: 'cauliflower', basePrice: 25, unit: labels.pricePerKg, trend: '-1%', cat: 'vegetables' },
+                  { key: 'okra', basePrice: 40, unit: labels.pricePerKg, trend: '+8%', cat: 'vegetables' },
+                  { key: 'brinjal', basePrice: 22, unit: labels.pricePerKg, trend: '+2%', cat: 'vegetables' },
+                  { key: 'ginger', basePrice: 120, unit: labels.pricePerKg, trend: '+10%', cat: 'vegetables' },
+                  { key: 'garlic', basePrice: 150, unit: labels.pricePerKg, trend: '+15%', cat: 'vegetables' },
+                  { key: 'chili', basePrice: 60, unit: labels.pricePerKg, trend: '-5%', cat: 'vegetables' },
+                  { key: 'carrot', basePrice: 30, unit: labels.pricePerKg, trend: '+2%', cat: 'vegetables' },
+                  { key: 'radish', basePrice: 20, unit: labels.pricePerKg, trend: '-1%', cat: 'vegetables' },
+                  { key: 'spinach', basePrice: 15, unit: labels.pricePerKg, trend: '+4%', cat: 'vegetables' },
+                  { key: 'bitterGourd', basePrice: 45, unit: labels.pricePerKg, trend: '+6%', cat: 'vegetables' },
+                  { key: 'bottleGourd', basePrice: 25, unit: labels.pricePerKg, trend: '-3%', cat: 'vegetables' },
+                  // Fruits
+                  { key: 'apple', basePrice: 120, unit: labels.pricePerKg, trend: '+2%', cat: 'fruits' },
+                  { key: 'banana', basePrice: 40, unit: labels.pricePerKg, trend: '+5%', cat: 'fruits' },
+                  { key: 'mango', basePrice: 80, unit: labels.pricePerKg, trend: '+12%', cat: 'fruits' },
+                  { key: 'grapes', basePrice: 60, unit: labels.pricePerKg, trend: '-4%', cat: 'fruits' },
+                  { key: 'orange', basePrice: 50, unit: labels.pricePerKg, trend: '+3%', cat: 'fruits' },
+                  { key: 'pomegranate', basePrice: 100, unit: labels.pricePerKg, trend: '+7%', cat: 'fruits' },
+                  { key: 'papaya', basePrice: 30, unit: labels.pricePerKg, trend: '-2%', cat: 'fruits' },
+                  { key: 'watermelon', basePrice: 20, unit: labels.pricePerKg, trend: '+10%', cat: 'fruits' },
+                  { key: 'guava', basePrice: 40, unit: labels.pricePerKg, trend: '+1%', cat: 'fruits' },
+                  // Grains
+                  { key: 'wheat', basePrice: 2450, unit: labels.pricePerQ, trend: '+1.2%', cat: 'grains' },
+                  { key: 'soyabean', basePrice: 4800, unit: labels.pricePerQ, trend: '+0.5%', cat: 'grains' },
+                  { key: 'cotton', basePrice: 7200, unit: labels.pricePerQ, trend: '-1.5%', cat: 'grains' },
+                  { key: 'rice', basePrice: 3500, unit: labels.pricePerQ, trend: '+2.1%', cat: 'grains' },
+                  { key: 'maize', basePrice: 2100, unit: labels.pricePerQ, trend: '+0.8%', cat: 'grains' },
+                ].filter(item => item.cat === mandiCategory)
+                .map(item => {
+                  // Simulate area-specific price variation
+                  const areaSeed = mandiArea.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+                  const variation = (areaSeed % 10) - 5; // -5 to +4
+                  const finalPrice = typeof item.basePrice === 'number' 
+                    ? (item.basePrice + (item.unit === labels.pricePerQ ? variation * 10 : variation)).toLocaleString()
+                    : item.basePrice;
+                  
+                  return { ...item, price: finalPrice };
+                }).filter(item => 
                   labels.mandiCrops[item.key as keyof typeof labels.mandiCrops].toLowerCase().includes(mandiSearch.toLowerCase())
                 ).map((item) => (
                   <div key={item.key} className="flex items-center justify-between p-2 rounded-xl bg-stone-50 hover:bg-stone-100 transition-colors">
