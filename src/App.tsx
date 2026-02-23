@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { 
   Upload, 
   Camera, 
@@ -17,7 +17,11 @@ import {
   Droplets,
   Sprout,
   ShieldCheck,
-  Stethoscope
+  Stethoscope,
+  CloudSun,
+  TrendingUp,
+  Mic,
+  MessageSquare
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { clsx, type ClassValue } from 'clsx';
@@ -56,7 +60,15 @@ const UI_LABELS = {
     analyzeCrop: "Analyze Crop",
     consulting: "Consulting the AI Doctor...",
     analyzingLeaves: "Analyzing leaves and patterns for diagnosis",
-    disclaimer: "KisanDost AI is a tool to assist farmers. Always consult with a local agricultural expert for critical decisions."
+    disclaimer: "KisanDost AI is a tool to assist farmers. Always consult with a local agricultural expert for critical decisions.",
+    symptomsLabel: "Describe symptoms (optional)",
+    symptomsPlaceholder: "e.g., yellow spots on edges, wilting since 2 days...",
+    weatherTitle: "Weather & Spray Advisory",
+    sprayGood: "Good time to spray",
+    sprayBad: "Avoid spraying (Rain expected)",
+    mandiTitle: "Current Mandi Prices",
+    mandiSubtitle: "Market rates for your region",
+    builtBy: "Built by Tarkase Dnyaneshwari"
   },
   Hindi: {
     urgentAction: "तत्काल कार्रवाई",
@@ -83,7 +95,15 @@ const UI_LABELS = {
     analyzeCrop: "फसल का विश्लेषण करें",
     consulting: "एआई डॉक्टर से सलाह ले रहे हैं...",
     analyzingLeaves: "निदान के लिए पत्तियों और पैटर्न का विश्लेषण कर रहे हैं",
-    disclaimer: "KisanDost AI किसानों की सहायता के लिए एक उपकरण है। महत्वपूर्ण निर्णयों के लिए हमेशा स्थानीय कृषि विशेषज्ञ से सलाह लें।"
+    disclaimer: "KisanDost AI किसानों की सहायता के लिए एक उपकरण है। महत्वपूर्ण निर्णयों के लिए हमेशा स्थानीय कृषि विशेषज्ञ से सलाह लें।",
+    symptomsLabel: "लक्षणों का वर्णन करें (वैकल्पिक)",
+    symptomsPlaceholder: "जैसे, किनारों पर पीले धब्बे, 2 दिनों से मुरझा रहे हैं...",
+    weatherTitle: "मौसम और छिड़काव सलाह",
+    sprayGood: "छिड़काव के लिए अच्छा समय",
+    sprayBad: "छिड़काव से बचें (बारिश की संभावना)",
+    mandiTitle: "वर्तमान मंडी भाव",
+    mandiSubtitle: "आपके क्षेत्र के लिए बाजार दरें",
+    builtBy: "Tarkase Dnyaneshwari द्वारा निर्मित"
   },
   Marathi: {
     urgentAction: "तात्काळ कारवाई",
@@ -110,16 +130,26 @@ const UI_LABELS = {
     analyzeCrop: "पिकाचे विश्लेषण करा",
     consulting: "एआय डॉक्टरचा सल्ला घेत आहे...",
     analyzingLeaves: "निदानासाठी पाने आणि नमुन्यांचे विश्लेषण करत आहे",
-    disclaimer: "KisanDost AI हे शेतकऱ्यांना मदत करण्यासाठी एक साधन आहे. महत्त्वाच्या निर्णयांसाठी नेहमी स्थानिक कृषी तज्ज्ञांचा सल्ला घ्या."
+    disclaimer: "KisanDost AI हे शेतकऱ्यांना मदत करण्यासाठी एक साधन आहे. महत्त्वाच्या निर्णयांसाठी नेहमी स्थानिक कृषी तज्ज्ञांचा सल्ला घ्या.",
+    symptomsLabel: "लक्षणांचे वर्णन करा (पर्यायी)",
+    symptomsPlaceholder: "उदा. कडांवर पिवळे डाग, २ दिवसांपासून कोमेजणे...",
+    weatherTitle: "हवामान आणि फवारणी सल्ला",
+    sprayGood: "फवारणीसाठी चांगली वेळ",
+    sprayBad: "फवारणी टाळा (पावसाची शक्यता)",
+    mandiTitle: "चालू मंडी भाव",
+    mandiSubtitle: "तुमच्या भागातील बाजार भाव",
+    builtBy: "Tarkase Dnyaneshwari यांनी तयार केले"
   }
 };
 
 export default function App() {
   const [image, setImage] = useState<string | null>(null);
+  const [symptoms, setSymptoms] = useState('');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [result, setResult] = useState<DiagnosisResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [language, setLanguage] = useState<Language>('English');
+  const [weather, setWeather] = useState<{ temp: number, condition: string, rain: boolean } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [history, setHistory] = useState<{ image: string, result: DiagnosisResult, date: string }[]>(() => {
@@ -128,6 +158,19 @@ export default function App() {
   });
 
   const labels = UI_LABELS[language];
+
+  // Simulated Weather Data
+  useEffect(() => {
+    const fetchWeather = () => {
+      // Simulate API call
+      setWeather({
+        temp: 28 + Math.floor(Math.random() * 5),
+        condition: 'Partly Cloudy',
+        rain: Math.random() > 0.7
+      });
+    };
+    fetchWeather();
+  }, []);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -162,7 +205,7 @@ export default function App() {
     setError(null);
     try {
       const mimeType = image.split(';')[0].split(':')[1];
-      const data = await analyzeCropImage(image, mimeType);
+      const data = await analyzeCropImage(image, mimeType, symptoms);
       setResult(data);
       
       // Save to history
@@ -180,6 +223,7 @@ export default function App() {
     setImage(null);
     setResult(null);
     setError(null);
+    setSymptoms('');
   };
 
   const currentData = result?.Languages[language];
@@ -219,6 +263,58 @@ export default function App() {
       </header>
 
       <main className="max-w-4xl mx-auto px-6 pt-12">
+        {/* Advanced Dashboard Widgets */}
+        {!result && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
+            {/* Weather Widget */}
+            <motion.div 
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="bg-white p-6 rounded-3xl border border-stone-100 shadow-sm flex items-center justify-between"
+            >
+              <div>
+                <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-2">{labels.weatherTitle}</h3>
+                <div className="flex items-center gap-3">
+                  <CloudSun size={32} className="text-orange-400" />
+                  <div>
+                    <p className="text-2xl font-bold text-stone-900">{weather?.temp}°C</p>
+                    <p className="text-sm text-stone-500">{weather?.condition}</p>
+                  </div>
+                </div>
+              </div>
+              <div className={cn(
+                "px-4 py-2 rounded-2xl text-xs font-bold flex items-center gap-2",
+                weather?.rain ? "bg-red-50 text-red-600" : "bg-emerald-50 text-emerald-600"
+              )}>
+                {weather?.rain ? <AlertTriangle size={14} /> : <CheckCircle2 size={14} />}
+                {weather?.rain ? labels.sprayBad : labels.sprayGood}
+              </div>
+            </motion.div>
+
+            {/* Mandi Prices Widget */}
+            <motion.div 
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="bg-white p-6 rounded-3xl border border-stone-100 shadow-sm"
+            >
+              <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-2">{labels.mandiTitle}</h3>
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="flex items-center gap-2 text-stone-900 font-bold">
+                    <TrendingUp size={16} className="text-emerald-500" />
+                    Wheat: ₹2,450/q
+                  </div>
+                  <p className="text-[10px] text-stone-400">{labels.mandiSubtitle}</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-xs font-bold text-emerald-600">+2.4%</p>
+                  <p className="text-[10px] text-stone-400">Today</p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+
         {/* Intro */}
         {!image && !result && (
           <motion.div 
@@ -282,6 +378,31 @@ export default function App() {
                   </div>
                 )}
               </div>
+
+              {/* Symptoms Input */}
+              {image && !isAnalyzing && (
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-6"
+                >
+                  <label className="block text-sm font-bold text-stone-700 mb-2 flex items-center gap-2">
+                    <MessageSquare size={16} className="text-emerald-600" />
+                    {labels.symptomsLabel}
+                  </label>
+                  <div className="relative">
+                    <textarea 
+                      value={symptoms}
+                      onChange={(e) => setSymptoms(e.target.value)}
+                      placeholder={labels.symptomsPlaceholder}
+                      className="w-full p-4 rounded-2xl border border-stone-200 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all resize-none h-24 text-sm"
+                    />
+                    <button className="absolute bottom-3 right-3 p-2 bg-stone-100 rounded-full text-stone-400 hover:text-emerald-600 transition-colors">
+                      <Mic size={16} />
+                    </button>
+                  </div>
+                </motion.div>
+              )}
 
               {image && !isAnalyzing && (
                 <motion.div 
@@ -532,7 +653,7 @@ export default function App() {
           {labels.disclaimer}
         </p>
         <div className="flex flex-col items-center gap-1">
-          <p className="text-sm font-medium text-stone-600">Built by <span className="text-emerald-700 font-bold">Tarkase Dnyaneshwari</span></p>
+          <p className="text-sm font-medium text-stone-600">{labels.builtBy}</p>
           <div className="flex items-center gap-2 text-[10px] text-stone-400 uppercase tracking-widest">
             <span>© 2024 KisanDost AI</span>
             <span className="w-1 h-1 bg-stone-300 rounded-full" />
