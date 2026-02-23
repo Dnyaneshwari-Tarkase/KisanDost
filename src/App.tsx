@@ -496,19 +496,20 @@ export default function App() {
   return (
     <div className="min-h-screen pb-20">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/70 backdrop-blur-xl border-b border-stone-100 px-8 py-5">
+      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-stone-100 px-4 sm:px-8 py-4 sm:py-5">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-11 h-11 bg-stone-900 rounded-2xl flex items-center justify-center text-white shadow-xl shadow-stone-200">
-              <Sprout size={24} />
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="w-9 h-9 sm:w-11 sm:h-11 bg-stone-900 rounded-xl sm:rounded-2xl flex items-center justify-center text-white shadow-xl shadow-stone-200">
+              <Sprout size={20} className="sm:hidden" />
+              <Sprout size={24} className="hidden sm:block" />
             </div>
             <div>
-              <h1 className="text-xl font-bold tracking-tight text-stone-900 leading-none mb-1">KisanDost</h1>
-              <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-emerald-600">{labels.aiDoctor}</p>
+              <h1 className="text-lg sm:text-xl font-bold tracking-tight text-stone-900 leading-none mb-0.5 sm:mb-1">KisanDost</h1>
+              <p className="text-[8px] sm:text-[10px] uppercase tracking-[0.2em] font-bold text-emerald-600">{labels.aiDoctor}</p>
             </div>
           </div>
           
-          <div className="flex items-center gap-2 bg-stone-100 p-1 rounded-full border border-stone-200">
+          <div className="flex items-center gap-1 sm:gap-2 bg-stone-100 p-1 rounded-full border border-stone-200">
             {(['English', 'Hindi', 'Marathi'] as Language[]).map((lang) => (
               <button
                 key={lang}
@@ -527,30 +528,31 @@ export default function App() {
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto px-8 pt-16">
+      <main className="max-w-6xl mx-auto px-4 sm:px-8 pt-8 sm:pt-16">
         {/* Advanced Dashboard Widgets */}
         {!result && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-12 sm:mb-16">
             {/* Weather Widget */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white p-8 rounded-[32px] border border-stone-100 shadow-sm flex items-center justify-between group hover:shadow-md transition-all"
+              className="bg-white p-6 sm:p-8 rounded-[24px] sm:rounded-[32px] border border-stone-100 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between group hover:shadow-md transition-all gap-4 sm:gap-0"
             >
               <div>
-                <h3 className="text-[10px] font-bold text-stone-400 uppercase tracking-[0.2em] mb-4">{labels.weatherTitle}</h3>
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 bg-orange-50 rounded-2xl flex items-center justify-center text-orange-500">
-                    <CloudSun size={32} />
+                <h3 className="text-[9px] sm:text-[10px] font-bold text-stone-400 uppercase tracking-[0.2em] mb-3 sm:mb-4">{labels.weatherTitle}</h3>
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 bg-orange-50 rounded-xl sm:rounded-2xl flex items-center justify-center text-orange-500">
+                    <CloudSun size={28} className="sm:hidden" />
+                    <CloudSun size={32} className="hidden sm:block" />
                   </div>
                   <div>
-                    <p className="text-3xl font-bold text-stone-900 leading-none mb-1">{weather?.temp}°C</p>
-                    <p className="text-sm font-medium text-stone-400">{weather?.condition}</p>
+                    <p className="text-2xl sm:text-3xl font-bold text-stone-900 leading-none mb-1">{weather?.temp}°C</p>
+                    <p className="text-xs sm:text-sm font-medium text-stone-400">{weather?.condition}</p>
                   </div>
                 </div>
               </div>
               <div className={cn(
-                "px-5 py-2.5 rounded-2xl text-[11px] font-bold flex items-center gap-2 uppercase tracking-wider",
+                "px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl text-[10px] sm:text-[11px] font-bold flex items-center gap-2 uppercase tracking-wider w-full sm:w-auto justify-center sm:justify-start",
                 weather?.rain ? "bg-red-50 text-red-600" : "bg-emerald-50 text-emerald-600"
               )}>
                 {weather?.rain ? <AlertTriangle size={14} /> : <CheckCircle2 size={14} />}
@@ -563,20 +565,26 @@ export default function App() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="bg-white p-8 rounded-[32px] border border-stone-100 shadow-sm overflow-hidden flex flex-col group hover:shadow-md transition-all"
+              className="bg-white p-6 sm:p-8 rounded-[24px] sm:rounded-[32px] border border-stone-100 shadow-sm overflow-hidden flex flex-col group hover:shadow-md transition-all"
             >
-              <div className="flex flex-col gap-6 mb-6">
+              <div className="flex flex-col gap-4 sm:gap-6 mb-4 sm:mb-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="text-[10px] font-bold text-stone-400 uppercase tracking-[0.2em] mb-1">{labels.mandiTitle}</h3>
-                    <p className="text-[10px] text-stone-300 font-medium">{labels.mandiSubtitle}</p>
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="text-[9px] sm:text-[10px] font-bold text-stone-400 uppercase tracking-[0.2em]">{labels.mandiTitle}</h3>
+                      <div className="flex items-center gap-1 bg-emerald-50 px-1.5 py-0.5 rounded-full">
+                        <div className="w-1 h-1 bg-emerald-500 rounded-full animate-pulse" />
+                        <span className="text-[8px] font-bold text-emerald-600 uppercase tracking-wider">Live</span>
+                      </div>
+                    </div>
+                    <p className="text-[9px] sm:text-[10px] text-stone-300 font-medium">{labels.mandiSubtitle}</p>
                   </div>
                   <div className="w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center text-emerald-500">
                     <TrendingUp size={16} />
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2">
+                <div className="flex flex-col sm:grid sm:grid-cols-2 gap-2">
                   <div className="relative">
                     <input 
                       list="mandi-villages"
@@ -703,16 +711,16 @@ export default function App() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-16"
+            className="text-center mb-12 sm:mb-16"
           >
-            <h2 className="serif text-4xl md:text-7xl text-stone-900 mb-6 tracking-tight leading-tight">
+            <h2 className="serif text-2xl sm:text-5xl md:text-7xl text-stone-900 mb-4 sm:mb-6 tracking-tight leading-tight px-2 sm:px-0">
               {labels.healthyCrops} <span className="text-emerald-700 italic">{labels.happyFarmers}</span>
             </h2>
-            <p className="text-stone-500 max-w-xl mx-auto text-lg leading-relaxed">{labels.introText}</p>
+            <p className="text-stone-500 max-w-xl mx-auto text-sm sm:text-lg leading-relaxed px-6 sm:px-0">{labels.introText}</p>
           </motion.div>
         )}
 
-        <div className="grid grid-cols-1 gap-12">
+        <div className="grid grid-cols-1 gap-8 sm:gap-12">
           {/* Upload Section */}
           {!result && (
             <motion.div 
@@ -723,7 +731,7 @@ export default function App() {
                 onDragOver={(e) => e.preventDefault()}
                 onDrop={onDrop}
                 className={cn(
-                  "relative aspect-[4/3] md:aspect-[21/9] rounded-[40px] border border-stone-200 transition-all overflow-hidden flex flex-col items-center justify-center bg-white shadow-2xl shadow-stone-200/50",
+                  "relative aspect-[1/1] sm:aspect-[4/3] md:aspect-[21/9] rounded-[32px] sm:rounded-[40px] border border-stone-200 transition-all overflow-hidden flex flex-col items-center justify-center bg-white shadow-2xl shadow-stone-200/50",
                   image ? "border-emerald-500/50" : "hover:border-emerald-400/50"
                 )}
               >
@@ -1032,18 +1040,18 @@ export default function App() {
       </main>
 
       {/* Footer Info */}
-      <footer className="max-w-6xl mx-auto px-8 mt-32 pb-16 text-center">
-        <div className="h-px bg-stone-100 w-full mb-12" />
-        <p className="text-[11px] text-stone-300 max-w-sm mx-auto leading-relaxed mb-8 uppercase tracking-widest font-medium">
+      <footer className="max-w-6xl mx-auto px-4 sm:px-8 mt-24 sm:mt-32 pb-12 sm:pb-16 text-center">
+        <div className="h-px bg-stone-100 w-full mb-8 sm:mb-12" />
+        <p className="text-[10px] sm:text-[11px] text-stone-300 max-w-sm mx-auto leading-relaxed mb-6 sm:mb-8 uppercase tracking-widest font-medium px-4 sm:px-0">
           {labels.disclaimer}
         </p>
-        <div className="flex flex-col items-center gap-4">
-          <div className="flex items-center gap-3">
-            <div className="h-px w-8 bg-stone-200" />
-            <p className="serif text-lg text-stone-800 italic">{labels.builtBy}</p>
-            <div className="h-px w-8 bg-stone-200" />
+        <div className="flex flex-col items-center gap-3 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="h-px w-6 sm:w-8 bg-stone-200" />
+            <p className="serif text-base sm:text-lg text-stone-800 italic">{labels.builtBy}</p>
+            <div className="h-px w-6 sm:w-8 bg-stone-200" />
           </div>
-          <div className="flex items-center gap-3 text-[9px] text-stone-400 uppercase tracking-[0.3em] font-bold">
+          <div className="flex items-center gap-2 sm:gap-3 text-[8px] sm:text-[9px] text-stone-400 uppercase tracking-[0.2em] sm:tracking-[0.3em] font-bold">
             <span>© 2024 KisanDost AI</span>
             <span className="w-1 h-1 bg-stone-200 rounded-full" />
             <span>Advanced Agriculture Tech</span>
