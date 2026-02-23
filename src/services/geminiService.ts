@@ -25,10 +25,12 @@ export interface DiagnosisResult {
   };
 }
 
-export async function analyzeCropImage(base64Image: string, mimeType: string): Promise<DiagnosisResult> {
+export async function analyzeCropImage(base64Image: string, mimeType: string, symptoms?: string): Promise<DiagnosisResult> {
   const model = "gemini-3-flash-preview";
 
   const prompt = `Analyze the uploaded image of a crop (leaf, stem, fruit) and provide a detailed, structured report to help farmers take action.
+  
+  ${symptoms ? `The farmer has also provided these symptoms: "${symptoms}"` : ""}
   
   Requirements:
   1. Identify the crop name.
