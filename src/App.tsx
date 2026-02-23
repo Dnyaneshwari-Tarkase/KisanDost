@@ -122,6 +122,11 @@ export default function App() {
   const [language, setLanguage] = useState<Language>('English');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const [history, setHistory] = useState<{ image: string, result: DiagnosisResult, date: string }[]>(() => {
+    const saved = localStorage.getItem('kisan_dost_history');
+    return saved ? JSON.parse(saved) : [];
+  });
+
   const labels = UI_LABELS[language];
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -159,6 +164,11 @@ export default function App() {
       const mimeType = image.split(';')[0].split(':')[1];
       const data = await analyzeCropImage(image, mimeType);
       setResult(data);
+      
+      // Save to history
+      const newHistory = [{ image, result: data, date: new Date().toLocaleString() }, ...history].slice(0, 5);
+      setHistory(newHistory);
+      localStorage.setItem('kisan_dost_history', JSON.stringify(newHistory));
     } catch (err: any) {
       setError(err.message || "Something went wrong. Please try again.");
     } finally {
@@ -319,6 +329,37 @@ export default function App() {
                   <AlertTriangle className="shrink-0" size={20} />
                   <p className="text-sm">{error}</p>
                 </div>
+              )}
+
+              {/* History Section */}
+              {!image && history.length > 0 && (
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="mt-12"
+                >
+                  <h3 className="text-stone-900 font-bold mb-4 flex items-center gap-2">
+                    <RefreshCw size={18} className="text-emerald-600" />
+                    Recent Scans
+                  </h3>
+                  <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    {history.map((item, i) => (
+                      <button 
+                        key={i}
+                        onClick={() => {
+                          setImage(item.image);
+                          setResult(item.result);
+                        }}
+                        className="group relative aspect-square rounded-2xl overflow-hidden border border-stone-200 hover:border-emerald-500 transition-all"
+                      >
+                        <img src={item.image} className="w-full h-full object-cover group-hover:scale-110 transition-transform" />
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-2">
+                          <p className="text-[10px] text-white font-bold truncate">{item.result.Languages[language].Condition}</p>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </motion.div>
               )}
             </motion.div>
           )}
@@ -487,9 +528,17 @@ export default function App() {
       {/* Footer Info */}
       <footer className="max-w-4xl mx-auto px-6 mt-20 text-center">
         <div className="h-px bg-stone-200 w-full mb-8" />
-        <p className="text-xs text-stone-400 max-w-sm mx-auto leading-relaxed">
+        <p className="text-xs text-stone-400 max-w-sm mx-auto leading-relaxed mb-4">
           {labels.disclaimer}
         </p>
+        <div className="flex flex-col items-center gap-1">
+          <p className="text-sm font-medium text-stone-600">Built by <span className="text-emerald-700 font-bold">Tarkase Dnyaneshwari</span></p>
+          <div className="flex items-center gap-2 text-[10px] text-stone-400 uppercase tracking-widest">
+            <span>© 2024 KisanDost AI</span>
+            <span className="w-1 h-1 bg-stone-300 rounded-full" />
+            <span>Advanced Agriculture Tech</span>
+          </div>
+        </div>
       </footer>
     </div>
   );
