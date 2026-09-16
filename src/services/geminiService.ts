@@ -1,6 +1,14 @@
 import { GoogleGenAI, Type, GenerateContentResponse } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
+function getGeminiClient() {
+  const apiKey = process.env.GEMINI_API_KEY;
+
+  if (!apiKey) {
+    throw new Error("Gemini API key is missing. Add GEMINI_API_KEY to .env.local and restart the dev server.");
+  }
+
+  return new GoogleGenAI({ apiKey });
+}
 
 export interface LanguageSpecificData {
   Crop: string;
@@ -26,6 +34,7 @@ export interface DiagnosisResult {
 }
 
 export async function analyzeCropImage(base64Image: string, mimeType: string, symptoms?: string): Promise<DiagnosisResult> {
+  const ai = getGeminiClient();
   const model = "gemini-3-flash-preview";
 
   const prompt = `Analyze the uploaded image of a crop (leaf, stem, fruit) and provide a detailed, structured report to help farmers take action.
