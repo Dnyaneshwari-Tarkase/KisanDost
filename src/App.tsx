@@ -227,7 +227,7 @@ const UI_LABELS = {
     },
     pricePerKg: "per kg",
     pricePerQ: "per quintal",
-    builtBy: "Built by Tarkase Dnyaneshwari"
+    builtBy: "🌾© 2026 KisanDost | Developed by Dnyaneshwari Tarkase👩‍💻"
   },
   Hindi: {
     urgentAction: "तत्काल कार्रवाई",
@@ -421,7 +421,7 @@ const UI_LABELS = {
     },
     pricePerKg: "प्रति किलो",
     pricePerQ: "प्रति क्विंटल",
-    builtBy: "Tarkase Dnyaneshwari द्वारा निर्मित"
+    builtBy: "🌾© २०२६ किसानदोस्त | ज्ञानेश्वरी तरकसे द्वारा बनाया और विकसित किया गया.👩‍💻"
   },
   Marathi: {
     urgentAction: "तात्काळ कारवाई",
@@ -615,7 +615,7 @@ const UI_LABELS = {
     },
     pricePerKg: "प्रति किलो",
     pricePerQ: "प्रति क्विंटल",
-    builtBy: "Tarkase Dnyaneshwari यांनी तयार केले"
+    builtBy: "🌾© २०२६ किसानदोस्त | ज्ञानेश्वरी तरकसे यांनी तयार केलेले.👩‍💻"
   }
 };
 
@@ -1340,7 +1340,6 @@ export default function App() {
             <div className="h-px w-6 sm:w-8 bg-stone-200" />
           </div>
           <div className="flex items-center gap-2 sm:gap-3 text-[8px] sm:text-[9px] text-stone-400 uppercase tracking-[0.2em] sm:tracking-[0.3em] font-bold">
-            <span>© 2024 KisanDost AI</span>
             <span className="w-1 h-1 bg-stone-200 rounded-full" />
             <span>Advanced Agriculture Tech</span>
           </div>
