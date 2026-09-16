@@ -745,6 +745,20 @@ export default function App() {
       </header>
 
       <main className="max-w-6xl mx-auto px-4 sm:px-8 pt-8 sm:pt-16">
+        {/* Intro */}
+        {!image && !result && (
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-12 sm:mb-16"
+          >
+            <h2 className="serif text-2xl sm:text-5xl md:text-7xl text-stone-900 mb-4 sm:mb-6 tracking-tight leading-tight px-2 sm:px-0">
+              {labels.healthyCrops} <span className="text-emerald-700 italic">{labels.happyFarmers}</span>
+            </h2>
+            <p className="text-stone-500 max-w-xl mx-auto text-sm sm:text-lg leading-relaxed px-6 sm:px-0">{labels.introText}</p>
+          </motion.div>
+        )}
+
         {/* Advanced Dashboard Widgets */}
         {!result && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-12 sm:mb-16">
@@ -992,20 +1006,6 @@ export default function App() {
               </div>
             </motion.div>
           </div>
-        )}
-
-        {/* Intro */}
-        {!image && !result && (
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-12 sm:mb-16"
-          >
-            <h2 className="serif text-2xl sm:text-5xl md:text-7xl text-stone-900 mb-4 sm:mb-6 tracking-tight leading-tight px-2 sm:px-0">
-              {labels.healthyCrops} <span className="text-emerald-700 italic">{labels.happyFarmers}</span>
-            </h2>
-            <p className="text-stone-500 max-w-xl mx-auto text-sm sm:text-lg leading-relaxed px-6 sm:px-0">{labels.introText}</p>
-          </motion.div>
         )}
 
         <div className="grid grid-cols-1 gap-8 sm:gap-12">
